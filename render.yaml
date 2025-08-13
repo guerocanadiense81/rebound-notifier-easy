@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: rebound-notifier-easy
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn -k uvicorn.workers.UvicornWorker app:app"
+    envVars:
+      - key: PAIRS
+        value: "IOTA/USDT,PEPE/USDT,DOGE/USDT"
+      - key: TF
+        value: "4h"
+      - key: HTF
+        value: "1d"
+      - key: TG_BOT_TOKEN
+        sync: false   # set in dashboard (secret)
+      - key: TG_CHAT_ID
+        sync: false   # set in dashboard (secret)
+      # Easy profile knobs (override if you want fewer trades)
+      - key: TARGET_TPM
+        value: "3"
+      - key: MAX_PER_MONTH
+        value: "3"
+      - key: CHECK_VWAP
+        value: "false"
+      - key: MIN_CORR
+        value: "0.15"
+      - key: VOL_MULT
+        value: "1.2"
+      - key: ATR_MULT
+        value: "1.2"
+      - key: SCORE_NEEDED
+        value: "5"
+      - key: NEAR_PCT
+        value: "2.0"
